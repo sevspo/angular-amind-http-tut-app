@@ -29,12 +29,12 @@ export class AppComponent implements OnInit {
   }
 
   onFetchPosts() {
-    // Send Http request
+    // Send Http request to the server
     this.fetchPosts()
   }
 
   onClearPosts() {
-    // Send Http request
+    // Send Http request to the server
   }
 
   private fetchPosts() {
