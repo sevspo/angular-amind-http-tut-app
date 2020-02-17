@@ -1,10 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Post } from "./post";
 import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
+import { map, catchError } from "rxjs/operators";
+import { Subject, throwError } from 'rxjs';
 
 @Injectable()
 export class PostsService {
+  error = new Subject<string>();
+
   constructor(private http: HttpClient) {}
 
   createAndStorePost(title: string, content: string) {
@@ -15,6 +18,8 @@ export class PostsService {
       .post("https://ng-http-tut-api.firebaseio.com/posts.json", postData)
       .subscribe(responseData => {
         console.log(responseData);
+      }, error => {
+        this.error.next(error.message);
       });
   }
 
@@ -40,7 +45,13 @@ export class PostsService {
               }
             }
             return postsArray;
+          }),
+          catchError(errRes => {
+            // send to analytic server etc. not relatet to UI, behind the 
+            // scenes stuff. but we have to wrap it with throwError
+            return throwError(errRes);
           })
+
         )
     );
   }

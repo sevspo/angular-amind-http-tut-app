@@ -59,7 +59,12 @@
 					<!-- <button class='btn btn-danger' (click)='onDeletePost()'>Delete</button> -->
 				</li>
 			</ul>
-			<p *ngIf='isFetching'>Loading</p>
+			<p *ngIf='isFetching'>Loading...</p>
+      <div *ngIf='error' class="alert alert-danger">
+        <h3>An Error Occured</h3>
+        <p> {{ error }} </p>
+        <button class="btn btn-danger" (click)='onHandleError()'>Ok</button>
+      </div>
 		</div>
 	</div>
 </div>
