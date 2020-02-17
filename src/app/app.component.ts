@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { PostsService} from './posts.service';
+import { PostsService } from "./posts.service";
 
 import { Post } from "./post";
 
@@ -34,7 +34,14 @@ export class AppComponent implements OnInit {
 
   onClearPosts() {
     // Send Http request to the server
+    this.postsService.deletePosts().subscribe(() => {
+      this.loadedPosts = [];
+    });
   }
+
+  // onDeletePost(post: Post) {
+  //   console.log(post.target)
+  // }
 
   // private fetchPosts() {
   //   //this.isFetching = true;

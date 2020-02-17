@@ -44,4 +44,7 @@ export class PostsService {
         )
     );
   }
+  deletePosts() {
+    return this.http.delete('https://ng-http-tut-api.firebaseio.com/posts.json')
+  }
 }
