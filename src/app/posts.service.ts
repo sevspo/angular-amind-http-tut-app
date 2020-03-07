@@ -13,7 +13,7 @@ export class PostsService {
   createAndStorePost(title: string, content: string) {
     const postData: Post = { title: title, content: content };
     // Send Http request . Angular HttpClient transforms it to json automatically
-    // Requests  are only send if you subscribe.
+    // Requests  are only sent if you subscribe.
     this.http
       .post("https://ng-http-tut-api.firebaseio.com/posts.json", postData)
       .subscribe(responseData => {
@@ -28,16 +28,16 @@ export class PostsService {
   fetchPosts() {
     return (
       this.http
-        .get<{ [key: string]: Post }>(
-          "https://ng-http-tut-api.firebaseio.com/posts.json"
-        )
         // 2. it is even better to add the type here, as the get function is a generic
-        .pipe(
-          map(responseData => {
+        .get<{ [key: string]: Post }>(
             //.pipe(map((responseData: {[key: string]: Post}) => {
-            // 1 .here the curly braces around the key mean signal to TS,
+            // 1 .here the brackets around the key mean signal to TS,
             // that we don't know how what key is named, we do know
             // that it is a string though.
+          "https://ng-http-tut-api.firebaseio.com/posts.json"
+        )
+        .pipe(
+          map(responseData => {
             const postsArray: Post[] = [];
             for (const key in responseData) {
               if (responseData.hasOwnProperty(key)) {
@@ -55,6 +55,7 @@ export class PostsService {
         )
     );
   }
+
   deletePosts() {
     return this.http.delete('https://ng-http-tut-api.firebaseio.com/posts.json')
   }
